@@ -1,0 +1,5 @@
+print("Peter")
+print("25")
+print(25)
+print(25 + 5)
+print("25" + "5")
