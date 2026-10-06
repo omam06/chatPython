@@ -49,9 +49,11 @@ elif rate >= 60:
     print('Attendance Status: Good')
 else:
     print('Attendance Status: Needs Improvement')
+
 #create a set for students who need attention
 needs_atention = absent | registered_not_submitted
 print('The following students need attention:', needs_atention)
+
 #what % of registered students need attention
 attention_rate = len(needs_atention) / len(registered) * 100
 print(f'Rate of Students who need Attention: {attention_rate:.2f}%')
