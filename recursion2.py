@@ -84,3 +84,51 @@ def first_index(lst, target):
         return 1 + first_index(lst[1:], target)
 
 print(first_index([4, 7, 2, 7, 4, 2, 12], 4))
+print()
+
+#write a recursive function that finds the last occurrence of a target in a list.
+def last_index(numbers, target):
+    if numbers == []:                   #base case
+        return -1
+    result = last_index(numbers[1:], target) 
+    if result != -1:
+        return result + 1
+    elif numbers[0] == target:
+        return 0
+    else:
+        return -1
+print(last_index([4, 7, 2, 7], 7))
+print(last_index([4, 7, 2, 7], 2))
+print(last_index([4, 7, 2], 9))
+print(last_index([], 5))
+print()
+
+#write a recursive function that return a new list containing the items in reverse order.
+def reverse_list(numbers):
+    if numbers == [] or len(numbers) == 1:                       #base
+        return numbers
+    versed = reverse_list(numbers[1:])           #take out 1st item and recursively reverse remaining list
+    item1 = numbers[0]
+    return versed + [item1]                                  #put it in a list. its int rn (+ combine both lists)
+print(reverse_list([1, 2, 3, 4, 5]))
+print()
+
+def sum_list(numbers):
+    if numbers == []:
+        return 0
+    return numbers[0] + sum_list(numbers[1:])
+print(sum_list([1, 3, 5]))
+print()
+
+#Write a recursive function called is_palindrome(numbers) that checks whether a list reads the same forwards and backwards.
+def is_palindrome(numbers):
+    if len(numbers) <= 1:
+        return True
+    elif numbers[0] != numbers[-1]:
+        return False
+    else:
+        
+        return is_palindrome(numbers[1:-1])
+print(is_palindrome([1, 3, 1, 7, 1]))
+print(is_palindrome([21, 17, 12, 17, 21]))
+print(is_palindrome([9, 13, 9]))
