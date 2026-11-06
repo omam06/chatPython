@@ -127,8 +127,15 @@ def is_palindrome(numbers):
     elif numbers[0] != numbers[-1]:
         return False
     else:
-        
         return is_palindrome(numbers[1:-1])
 print(is_palindrome([1, 3, 1, 7, 1]))
 print(is_palindrome([21, 17, 12, 17, 21]))
 print(is_palindrome([9, 13, 9]))
+
+def mystery(n):
+    if n == 0:
+        return 0
+
+    return n + mystery(n - 1)
+
+print(mystery(4))
