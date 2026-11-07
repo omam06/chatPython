@@ -1,7 +1,7 @@
 import random
 
-again = "yes"
-while again == "yes":
+another_round = "yes"
+while another_round == "yes":
     
     secret_number = random.randint(1, 100)
     attempts = 0
@@ -21,9 +21,15 @@ while again == "yes":
             print("Too high, Go lower!")
         elif valid_guess < secret_number:
             print("Too low, Go higher!")
-        elif valid_guess == secret_number:
+        else: #valid_guess == secret_number:
             print("Correct! You guessed right 🎉")
             correct_guess = True
             print("It took you", attempts, "attempts.")
-    again = input("Would you like to play again? (yes/no)  ").strip().lower()
+    
+    another_round = input("Would you like to play again? ").strip().lower()
+
+    while another_round not in ["yes", "no"]:
+        print("Invalid response. MUST be yes or no.")
+        another_round = input("Would you like to play again? ").strip().lower()
+
 print("Thanks for playing. Goodbye 👋")
