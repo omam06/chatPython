@@ -48,7 +48,9 @@ print()
 with open("my_notes.txt", "r") as file:
     line1 = file.readline()
     print(first)
+    print(file.tell())
 
+    print()
     file.seek(0)
     line = file.readline()
     print(line)
@@ -58,3 +60,23 @@ with open("my_notes.txt", "r") as file:
     print(content)
 
 # tell() gives current position of the pointer
+ga = "I am learning Python."
+print(len(ga))
+print()
+
+with open("my_notes.txt", "r") as file:
+    line1 = file.readline()
+
+    print(repr(line1))
+    print(len(line1))
+    print(file.tell())     #tell adds 1 (for \r) to len(including newline) cos each line end as \r\n
+print()
+
+with open("my_notes.txt", "r") as file:
+    line1 = file.readline()
+    position = file.tell()
+
+    file.seek(0)
+    file.seek(position)                            #take pointer to end of 1st line, so 2nd line prints
+
+    print(file.readline())               
