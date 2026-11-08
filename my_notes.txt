@@ -1,1 +1,4 @@
-I am learning Python File Handling. And I'm having a great time.
+I am learning Python.
+File Handling is interesting.
+And I'm having a great time. 
+Making progress as well.
