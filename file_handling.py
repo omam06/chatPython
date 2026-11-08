@@ -26,12 +26,6 @@ with open("my_notes.txt", "r") as file:
 print(lines)
 print()
 
-#looping through a file
-with open("my_notes.txt", "r") as file:
-    for line in file:
-        print(line)
-print()
-
 with open("my_notes.txt", "r") as file:
     first = file.readline()
     second = file.readline()
@@ -80,3 +74,12 @@ with open("my_notes.txt", "r") as file:
     file.seek(position)                            #take pointer to end of 1st line, so 2nd line prints
 
     print(file.readline())               
+print()
+
+
+#looping through a file to print each line w/o using readline() (best for large files)
+with open("my_notes.txt", "r") as file:
+    for line in file:
+        print(line.strip())      #print adds newline by default, so strip away.
+print()
+
