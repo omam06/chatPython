@@ -2,3 +2,5 @@ I am learning Python.
 File Handling is interesting.
 And I'm having a great time. 
 Making progress as well.
+I am in the Learn2Earn Fellowship
+Training to become a full stack AI Engineer

@@ -80,6 +80,21 @@ print()
 #looping through a file to print each line w/o using readline() (best for large files)
 with open("my_notes.txt", "r") as file:
     for line in file:
-        print(line.strip())      #print adds newline by default, so strip away.
+        print(line, end="")      #print adds newline by default cos value of end is \n + \n already inside the line, so strip away.
+                                    # strip() can remove meaningful leading or trailing spaces, so no.
+print("Python", "is", "fun", sep="-")           #print() also has a 2nd parameter, sep that control what goes btwn values, space by default
 print()
 
+# You can also tell Python how many characters (not lines) to read: read() with a size argument
+with open("my_notes.txt", "r") as file:
+    content1 = file.read(50)
+    print(content1)
+
+    content2 = file.read(50)
+    print(content2)
+
+    content3 = file.read(50)
+    print(content3)
+
+    content4 = file.read(5)
+    print(repr(content4))
