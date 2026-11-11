@@ -62,7 +62,7 @@ filename = "loops.py"
 print(os.path.join(folder, subfolder, filename))
 print()
 
-# os.scandir()  -  unlike os.listdir(), which gives us just the names of directory contents, os.scandir() gives us directory entries that provide additional information.
+# os.scandir()  -  unlike os.listdir(), which gives us just the names of directory contents, os.scandir() gives us directory entries that provide additional information. It lets us inspect individual entries to determine whether they're files or directories
 with os.scandir("Study_Projects") as entries:
     for entry in entries:
         print()
@@ -104,4 +104,15 @@ os.rename("Projects", "My_Projects")                           rename directorie
 
 shutil.move("old_notes.txt", "Projects/")                       file is moved inside projects dir. shutil.move() 4 moving files & dir."""
 
+# os.walk() -  exploring an entire directory and all its nested directories automatically
+for root, dirs, files in os.walk("."):             #automatically visits nested directories. You don't have to write nested loops to descend into them.
+    print(root)
+    print(dirs)
+    print(files)
+print()
 
+# To print the full paths of every file inside a directory and all its subdirectories
+for root, dirs, files in os.walk("."):
+    for filename in files:
+        file_path = os.path.join(root, filename)
+        print(file_path)                    #--> ./Study_Projects/dict_project.py
