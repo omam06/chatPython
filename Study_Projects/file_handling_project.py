@@ -42,3 +42,34 @@ while operation != 10:
         print("Goodbye!")
     else:
         print("Invalid option. Must be bewteen 1 to 10")
+
+
+def create_file():
+    filename = input("Enter filename: ").strip()
+    if not filename:
+        print("Filename cannot be empty!")
+
+    elif os.path.exists(filename):
+        print("A file or directory with that name already exists.")
+    else:
+        try:
+            with open(filename, "w") as file:
+                pass
+            print(f"{filename} created successfully!")
+        except OSError as err:                   #OS may reject filename cos of symbols, filesystem-related errors - FileNotFoundError, PermissionError, and IsADirectoryError
+            print(f"Failed to create file: {err}")
+
+def write_to_file():
+    filename = input("Enter the name of file to which you wish to write: ").strip()
+    if not filename:
+        print("Filename must not be empty")
+    elif not os.path.exists(filename):
+        print("File not found")
+    elif not os.path.isfile(filename):
+        print("Matching document is not a file.")
+    else:
+        text = input("Enter content: ").strip()
+        try:
+            with open(filename, "w") as file:
+                file.write(text)
+                
