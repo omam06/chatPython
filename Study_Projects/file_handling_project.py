@@ -68,8 +68,10 @@ def write_to_file():
     elif not os.path.isfile(filename):
         print("Matching document is not a file.")
     else:
-        text = input("Enter content: ").strip()
+        text = input("Enter content: ")
         try:
             with open(filename, "w") as file:
                 file.write(text)
-                
+            print("Writing to file successful.")  
+        except OSError as err:
+            print(f"Failed to write to file: {err}")
