@@ -14,7 +14,13 @@ def append_to_file():
             if size == 0:
                 content = text
             else:
-                content = f"\n{text}"
+                with open(filename, "r") as file:
+                    old_content = file.read()
+                if old_content[-1] == "\n":
+                    content = text 
+                else:
+                    content = f"\n{text}"
+            
             with open(filename, "a") as file:
                 file.write(content)
             print(f"Appending text to {filename} successful ✅")
@@ -119,3 +125,29 @@ def read_file():
                     print(content)
         except OSError as er:
             print(f"❌ Failed to read file: {er}")
+
+def rename_a_file():
+    filename = input("Enter filename: ").strip()
+    if not filename:
+        print("Filename must not be empty")
+    elif not os.path.exists(filename):
+        print("❌ File does not exist")
+    elif not os.path.isfile(filename):
+        print("Matching document is not a file.")
+    else:
+        new_name = input("Enter new file name: ").strip()
+        if not new_name:
+            print("New name must not be empty.")
+
+        directory = os.path.dirname(filename)
+        new_path = os.path.join(directory, new_name)
+        if os.path.exists(new_path):
+            print("That already exists.")
+        else:
+            directory = os.path.dirname(filename)
+            new_path = os.path.join(directory, new_name)
+            try:
+                os.rename(filename, new_path)
+                print(f"File renamed to {new_name} successfully ✅")
+            except OSError as e:
+                print(f"❌ Failed to rename file: {e}")

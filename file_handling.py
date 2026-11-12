@@ -42,7 +42,7 @@ print()
 with open("my_notes.txt", "r") as file:
     line1 = file.readline()
     print(first)
-    print(file.tell())
+    print(file.tell())                  #file.tell() gives currebt position of pointer
 
     print()
     file.seek(0)
