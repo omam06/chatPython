@@ -138,16 +138,14 @@ def rename_a_file():
         new_name = input("Enter new file name: ").strip()
         if not new_name:
             print("New name must not be empty.")
-
-        directory = os.path.dirname(filename)
-        new_path = os.path.join(directory, new_name)
-        if os.path.exists(new_path):
-            print("That already exists.")
         else:
             directory = os.path.dirname(filename)
             new_path = os.path.join(directory, new_name)
-            try:
-                os.rename(filename, new_path)
-                print(f"File renamed to {new_name} successfully ✅")
-            except OSError as e:
-                print(f"❌ Failed to rename file: {e}")
+            if os.path.exists(new_path):
+                print("That already exists.")
+            else:
+                try:
+                    os.rename(filename, new_path)
+                    print(f"File renamed to {new_name} successfully ✅")
+                except OSError as e:
+                    print(f"❌ Failed to rename file: {e}")
