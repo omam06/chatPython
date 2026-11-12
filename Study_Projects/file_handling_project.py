@@ -1,3 +1,28 @@
+import os 
+def append_to_file():
+    filename = input("Enter file name: ").strip()
+    if not filename:
+        print("Filename must not be empty")
+    elif not os.path.exists(filename):
+        print("❌ File does not exist")
+    elif not os.path.isfile(filename):
+        print("Matching document is not a file.")
+    else:
+        try:
+            text = input("Enter text: ")
+            size = os.path.getsize(filename)
+            if size == 0:
+                content = text
+            else:
+                content = f"\n{text}"
+            with open(filename, "a") as file:
+                file.write(content)
+            print(f"Appending text to {filename} successful ✅")
+                
+        except OSError as e:
+            print(f"❌ Failed to append: {e}")
+
+
 operation = 1
 while operation != 10:
     print("\n========== PERSONAL FILE MANAGER ==========")
@@ -27,7 +52,7 @@ while operation != 10:
     elif operation == 3:
         'read to a file'
     elif operation == 4:
-        'append'
+        append_to_file()
     elif operation == 5:
         'rename'
     elif operation == 6:
@@ -64,7 +89,7 @@ def write_to_file():
     if not filename:
         print("Filename must not be empty")
     elif not os.path.exists(filename):
-        print("File not found")
+        print("❌File not found")
     elif not os.path.isfile(filename):
         print("Matching document is not a file.")
     else:
@@ -72,6 +97,25 @@ def write_to_file():
         try:
             with open(filename, "w") as file:
                 file.write(text)
-            print("Writing to file successful.")  
+            print("Writing to file successful ✅")  
         except OSError as err:
-            print(f"Failed to write to file: {err}")
+            print(f"❌Failed to write to file: {err}")
+
+def read_file():
+    filename = input("Enter the file name: ").strip()
+    if not filename:
+        print("Filename must not be empty")
+    elif not os.path.exists(filename):
+        print("❌ File does not exist")
+    elif not os.path.isfile(filename):
+        print("Matching document is not a file.")
+    else:
+        try:
+            with open(filename, "r") as file:
+                content = file.read()
+                if not content:
+                    print("File is empty")
+                else:
+                    print(content)
+        except OSError as er:
+            print(f"❌ Failed to read file: {er}")
