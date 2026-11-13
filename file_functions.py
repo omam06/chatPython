@@ -75,8 +75,8 @@ with os.scandir("Study_Projects") as entries:
             print(entry.name, "is a directory")
 print()
 
-# os.makedir("New_Folder") creates 1 directory inside cwd
-# os.makedirs expect a path as it's 1st argument nested dir: os.makedirs("Projects/Python/File_Handling")
+# os.mkdir("New_Folder") creates 1 directory inside cwd
+# os.makedirs - create 1 dir with nested dirs inside(no file). it expect a path as it's 1st argument nested dir: os.makedirs("Projects/Python/File_Handling")
 
 """import os
 

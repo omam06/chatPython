@@ -1,2 +1,0 @@
-Testing my append function with an empty line to see if there'll be a blank line at the front.
-A new line for testing too
