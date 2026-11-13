@@ -6,7 +6,7 @@ def create_file():
         print("Filename cannot be empty!")
     elif os.path.isfile(filename):
         print(f"A file called {filename} already exists")
-    elif os.path.exists(filename):
+    elif os.path.isdir(filename):
         print(f"A directory with the name {filename} already exists")
     elif os.path.exists(filename):
         print(f"An entry with the name {filename} already exists")
@@ -17,6 +17,7 @@ def create_file():
             print(f"{filename} created successfully!")
         except OSError as err:                   #OS may reject filename cos of symbols, filesystem-related errors - FileNotFoundError, PermissionError, and IsADirectoryError
             print(f"Failed to create file: {err}")
+
 
 def write_to_file():
     filename = input("Enter the name of file to which you wish to write: ").strip()
@@ -131,10 +132,13 @@ def create_directory():
     new_directory = input("Enter directory path: ").strip()
     if not new_directory:
         print("Directory path must not be empty!")
-    elif os.path.exists(new_directory):
-        print("Oooppsss 😬 Directory already exists")
     elif os.path.isfile(new_directory):
         print("Matching result is a file, not a directory.")
+    elif os.path.isdir(new_directory):
+        print(f"Oooppsss 😬 Directory {new_directory} already exists")
+    elif os.path.exists(new_directory):
+        print(f"An entry with the name {new_directory} already exists")
+    
     else:
         ask = input("Is this a single or a nested directory? (Single/Nested): ").strip().title()
         while ask not in ["Single", "Nested"]:
@@ -149,6 +153,7 @@ def create_directory():
             print(f"❌ Failed to create directory: {e}")
         else:
             print(f"{new_directory} created successfully ✅")
+
 
 def list_directory_contents():
     directory = input("Enter directory path: ").strip()
