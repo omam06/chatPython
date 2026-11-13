@@ -77,7 +77,7 @@ print()
 
 # os.mkdir("New_Folder") creates 1 directory inside cwd
 # os.makedirs - create 1 dir with nested dirs inside(no file). it expect a path as it's 1st argument nested dir: os.makedirs("Projects/Python/File_Handling")
-
+#os.makedirs("folder_path", exist_ok=True) - creates Create this directory if necessary, but don't complain if it already exists."
 """import os
 
 folders = ["Python", "Projects", "Exercises"]
