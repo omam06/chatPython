@@ -1,4 +1,4 @@
-import error_xtra
+import Error_Handling.error_xtra as error_xtra
 
 print("Main program running")
 
