@@ -51,17 +51,8 @@ def register_user():
     elif not isinstance(age, int):
         raise TypeError("Age must be a number")
     else:
-        return("Age:", age)
-
+        print("Age:", age)
+        print("Registration complete")
     assert age >= 0, "Invalid age"        #1st if already handle -ve numbers so noting 4 assert
-    print("Registration complete")
+    
 register_user()
-
-age = -5
-
-if age < 0:
-    raise ValueError("Age cannot be negative")
-
-assert age >= 0, "Invalid age"
-
-print("Registration complete")
