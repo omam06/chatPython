@@ -38,8 +38,30 @@ def calculate_square_root(number):
     assert number >= 0, "Number cannot be negative"
     return number ** 0.5
 print(calculate_square_root(9))
+print()
 
 """ if/else control the program's flow by allowing different actions depending on which conditions are met.
  assert checks whether a condition that your program assumes to be true actually holds. If false, it raises AssertionError.
-assertions can be disabled with Python's optimization mode, so don't use them for essential input validation."""
+assertions can be disabled with Python's optimization mode(python -O filename), so don't use them for essential input validation."""
 
+def register_user():
+    age = int(input("Enter age: "))
+    if age < 0:
+        raise ValueError("Age must be a positive integer")
+    elif not isinstance(age, int):
+        raise TypeError("Age must be a number")
+    else:
+        return("Age:", age)
+
+    assert age >= 0, "Invalid age"        #1st if already handle -ve numbers so noting 4 assert
+    print("Registration complete")
+register_user()
+
+age = -5
+
+if age < 0:
+    raise ValueError("Age cannot be negative")
+
+assert age >= 0, "Invalid age"
+
+print("Registration complete")
