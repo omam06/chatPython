@@ -32,3 +32,14 @@ try:
     print(calculate_average([]))
 except AssertionError as e:
     print(e)
+print()
+
+def calculate_square_root(number):
+    assert number >= 0, "Number cannot be negative"
+    return number ** 0.5
+print(calculate_square_root(9))
+
+""" if/else control the program's flow by allowing different actions depending on which conditions are met.
+ assert checks whether a condition that your program assumes to be true actually holds. If false, it raises AssertionError.
+assertions can be disabled with Python's optimization mode, so don't use them for essential input validation."""
+
