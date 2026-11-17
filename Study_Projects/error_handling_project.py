@@ -3,10 +3,11 @@ while True:
 
     print("1. Create account")
     print("2. Check balance")
-    print("3. Deposit money")
-    print("4. Withdraw money")
-    print("5. View transaction history")
-    print("6. Exit")
+    print("3. Deposit")
+    print("4. Withdraw")
+    print("5. Transfer")
+    print("6. View transaction history")
+    print("7. Exit")
 
     operation = input("Choose an operation: ").strip()
 
@@ -19,8 +20,10 @@ while True:
     elif operation == "4":
         #withdraw
     elif operation == "5":
-        #history
+        #transfer
     elif operation == "6":
+        #history
+    elif operation == "7":
         break
     else:
-        print("Invalid option. Must be from 1-6")
+        print("Invalid option. Must be from 1-7")
