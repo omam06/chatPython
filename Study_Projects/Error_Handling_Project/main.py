@@ -39,6 +39,28 @@ def save_accounts(accounts):
             
 accounts = load_accounts()
 
+def create_account():
+    customer_name = input("Enter your name: ").strip()
+    while not customer_name:
+            print("Name must NOT be empty")
+            customer_name = input("Enter your name: ").strip()
+
+    while True:
+        try:
+            customer_age = int(input("Enter your age: "))
+            if customer_age < 18:
+                print("You must be atleast 18")
+            else:
+                break
+        except ValueError:
+            print("Enter a valid whole number")
+    
+    import random
+    account_number = random.randint(1000000000, 9999999999)
+    while account_number in accounts:
+        account_number = random.randint(1000000000, 9999999999)
+        
+
 
 while True:
     print("========== PERSONAL BANKING SYSTEM ==========")
