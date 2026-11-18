@@ -10,6 +10,7 @@ class InsufficientFundsError(BankingError):
 
 import os
 import json
+import random
 
 filename = "accounts.json"
 def load_accounts():
@@ -40,10 +41,10 @@ def save_accounts(accounts):
 accounts = load_accounts()
 
 def create_account():
-    customer_name = input("Enter your name: ").strip()
+    customer_name = input("Enter your name: ").strip().title()
     while not customer_name:
             print("Name must NOT be empty")
-            customer_name = input("Enter your name: ").strip()
+            customer_name = input("Enter your name: ").strip().title()
 
     while True:
         try:
@@ -55,10 +56,25 @@ def create_account():
         except ValueError:
             print("Enter a valid whole number")
     
-    import random
-    account_number = random.randint(1000000000, 9999999999)
+    
+    account_number = str(random.randint(1000000000, 9999999999))
     while account_number in accounts:
-        account_number = random.randint(1000000000, 9999999999)
+        account_number = str(random.randint(1000000000, 9999999999))
+        
+    accounts[account_number] = {
+        "name": customer_name,
+        "age": customer_age,
+        "balance": 0,
+        "transactions": []
+    }    
+    save_success = save_accounts(accounts)
+    if save_success:
+        print("Account created & saved successfully✅")
+        print("Your account number is:", account_number)
+    else:
+        accounts.pop(account_number)
+        
+    
         
 
 
