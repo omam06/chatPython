@@ -73,13 +73,22 @@ def create_account():
         print("Your account number is:", account_number)
     else:
         accounts.pop(account_number)
-        
+        print("Account creation failed. Please try again")
+
+
+def check_balance():
+    acct_num = input("Enter account: ").strip()
+    if acct_num in accounts:
+        account = accounts[acct_num]
+        print(f"Account Balance for {account['name']} is ₦{account['balance']}")
+    else:
+        raise InvalidAccountError("Oooppss❗ Recipient Account do NOT exist")
     
         
 
 
 while True:
-    print("========== PERSONAL BANKING SYSTEM ==========")
+    print("\n========== PERSONAL BANKING SYSTEM ==========")
 
     print("1. Create account")
     print("2. Check balance")
@@ -92,18 +101,19 @@ while True:
     operation = input("Choose an operation: ").strip()
 
     if operation == "1":
-        # create acc
+        create_account()
     elif operation == "2":
-        #check bal
+        check_balance()
     elif operation == "3":
-        #deposit
+        pass
     elif operation == "4":
-        #withdraw
+        pass
     elif operation == "5":
-        #transfer
+        pass
     elif operation == "6":
-        #history
+        pass
     elif operation == "7":
+        print("Bye!👋 See you again")
         break
     else:
         print("Invalid option. Must be from 1-7")
