@@ -84,7 +84,8 @@ def check_balance():
     else:
         raise InvalidAccountError("Oooppss❗ Account does NOT exist")
     
-        
+def deposit():
+    
 
 
 while True:
