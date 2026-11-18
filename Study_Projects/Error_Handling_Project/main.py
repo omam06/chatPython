@@ -77,12 +77,12 @@ def create_account():
 
 
 def check_balance():
-    acct_num = input("Enter account: ").strip()
+    acct_num = input("Enter account number: ").strip()
     if acct_num in accounts:
         account = accounts[acct_num]
         print(f"Account Balance for {account['name']} is ₦{account['balance']}")
     else:
-        raise InvalidAccountError("Oooppss❗ Recipient Account do NOT exist")
+        raise InvalidAccountError("Oooppss❗ Account does NOT exist")
     
         
 
@@ -103,7 +103,10 @@ while True:
     if operation == "1":
         create_account()
     elif operation == "2":
-        check_balance()
+        try:
+            check_balance()
+        except InvalidAccountError as err:
+            print(err)
     elif operation == "3":
         pass
     elif operation == "4":
