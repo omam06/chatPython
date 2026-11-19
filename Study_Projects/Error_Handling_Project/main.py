@@ -11,6 +11,7 @@ class InsufficientFundsError(BankingError):
 import os
 import json
 import random
+from decimal import Decimal, InvalidOperation
 
 filename = "accounts.json"
 def load_accounts():
@@ -85,6 +86,20 @@ def check_balance():
         raise InvalidAccountError("Oooppss❗ Account does NOT exist")
     
 def deposit():
+    acct_num = input("Enter account number: ").strip()
+    if acct_num not in accounts:
+        raise InvalidAccountError("Account does NOT exist❌")
+
+    while True:
+        amount = input("Enter deposit amount: ").strip()
+        try:
+            deposit_amount = Decimal(amount)
+        except InvalidOperation:
+            print("Invalid input. Amount MUST be a valid number")
+            continue
+            
+        #rest of operation
+
     
 
 
