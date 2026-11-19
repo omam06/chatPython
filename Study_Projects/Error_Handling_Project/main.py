@@ -93,9 +93,17 @@ def deposit():
     while True:
         amount = input("Enter deposit amount: ").strip()
         try:
-            deposit_amount = Decimal(amount)
+            dep_amount = Decimal(amount)
         except InvalidOperation:
             print("Invalid input. Amount MUST be a valid number")
+            continue
+        if dep_amount <= 0:
+            print("Deposit amount MUST be more than 0")
+            continue
+        deposit_amount = dep_amount.quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
+        
+        if deposit_amount <= 0:
+            print("Deposit amount rejected🚫 MUST be greater than zero")
             continue
             
         #rest of operation
