@@ -105,7 +105,9 @@ def deposit():
         if deposit_amount <= 0:
             print("Deposit amount rejected🚫 MUST be greater than zero")
             continue
-            
+        account = accounts[acct_num]
+        account["balance"] += deposit_amount
+        break
         #rest of operation
 
     
