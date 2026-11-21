@@ -105,12 +105,20 @@ def deposit():
         if deposit_amount <= 0:
             print("Deposit amount rejected🚫 MUST be greater than zero")
             continue
+        
         account = accounts[acct_num]
+        initial_balance = account["balance"]
         account["balance"] += deposit_amount
-        break
-        #rest of operation
 
-    
+        save_success = save_accounts(accounts)
+        if save_success:
+            print(f"Deposit of ₦{deposit_amount} successful✅")
+            print(f"New balance: ₦{account['balance']}")
+            break
+        else:
+            account["balance"] = initial_balance
+            print(f"Deposit failed❌ Balance: {initial_balance}")
+            continue
 
 
 while True:
