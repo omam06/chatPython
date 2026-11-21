@@ -11,7 +11,8 @@ class InsufficientFundsError(BankingError):
 import os
 import json
 import random
-from decimal import Decimal, InvalidOperation
+import copy
+from decimal import Decimal, InvalidOperation, ROUND_HALF_UP
 
 filename = "accounts.json"
 def load_accounts():
@@ -33,6 +34,9 @@ def load_accounts():
 def save_accounts(accounts):
         try:
             with open(filename, "w") as file:
+                accounts_copy = copy.deepcopy(accounts)
+                for each_account in accounts_copy:
+                    accounts_copy[each_account]["balance"] = str(accounts_copy[each_account]["balance"])
                 json.dump(accounts, file)
                 return True
         except Exception as err:
@@ -142,7 +146,10 @@ while True:
         except InvalidAccountError as err:
             print(err)
     elif operation == "3":
-        pass
+        try:
+            deposit()
+        except InvalidAccountError as e:
+            print(e)
     elif operation == "4":
         pass
     elif operation == "5":
