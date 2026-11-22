@@ -21,6 +21,8 @@ def load_accounts():
             with open(filename, "r") as file:
                 json_data = json.load(file)
                 if isinstance(json_data, dict):
+                    for each_acct in json_data:
+                        json_data[each_acct]["balance"] = Decimal(json_data[each_acct]["balance"]) 
                     return json_data
                 else:
                     print("❌Error: Invalid file found")
@@ -70,7 +72,7 @@ def create_account():
     accounts[account_number] = {
         "name": customer_name,
         "age": customer_age,
-        "balance": 0,
+        "balance": Decimal("0.00"),
         "transactions": []
     }    
     save_success = save_accounts(accounts)
