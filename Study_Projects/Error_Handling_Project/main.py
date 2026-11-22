@@ -33,12 +33,13 @@ def load_accounts():
 
 def save_accounts(accounts):
         try:
+            accounts_copy = copy.deepcopy(accounts)
+            for each_account in accounts_copy:
+                accounts_copy[each_account]["balance"] = str(accounts_copy[each_account]["balance"])
             with open(filename, "w") as file:
-                accounts_copy = copy.deepcopy(accounts)
-                for each_account in accounts_copy:
-                    accounts_copy[each_account]["balance"] = str(accounts_copy[each_account]["balance"])
-                json.dump(accounts, file)
-                return True
+                json.dump(accounts_copy, file)
+            return True
+        
         except Exception as err:
             print("❌Failed to save account:", err)
             return False
