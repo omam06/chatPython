@@ -116,6 +116,7 @@ def deposit():
         account = accounts[acct_num]
         initial_balance = account["balance"]
         account["balance"] += deposit_amount
+        account["transactions"].append({"type": "deposit", "amount": str(deposit_amount)})
 
         save_success = save_accounts(accounts)
         if save_success:
@@ -125,6 +126,7 @@ def deposit():
         else:
             account["balance"] = initial_balance
             print(f"Deposit failed❌ Balance: {initial_balance}")
+            account["transactions"].pop()
             continue
 
 
