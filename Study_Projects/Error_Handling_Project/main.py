@@ -88,7 +88,7 @@ def create_account():
 
 
 def check_balance():
-    acct_num = input("Enter account number: ").strip()
+    acct_num = input("Enter your account number: ").strip()
     if acct_num in accounts:
         account = accounts[acct_num]
         print(f"Account Balance for {account['name']} is ₦{account['balance']}")
@@ -96,7 +96,7 @@ def check_balance():
         raise InvalidAccountError("Oooppss❗ Account does NOT exist")
     
 def deposit():
-    acct_num = input("Enter account number: ").strip()
+    acct_num = input("Enter your account number: ").strip()
     if acct_num not in accounts:
         raise InvalidAccountError("Account does NOT exist❌")
 
@@ -138,7 +138,7 @@ def deposit():
             continue
 
 def withdrawal():
-    acct_num = input("Enter account number: ").strip()
+    acct_num = input("Enter your account number: ").strip()
     if acct_num not in accounts:
         raise InvalidAccountError("Account does NOT exist❌")
 
@@ -185,6 +185,44 @@ def withdrawal():
             print(f"Withdrawal failed❌ Balance: {original_balance}")
             account["transactions"].pop()
             continue
+
+def transfer():
+    sender_acct = input("Enter your account number: ").strip()
+    if sender_acct not in accounts:
+        raise InvalidAccountError("Account does NOT exist❌")
+    
+    recipient_acct = input("Enter recipient account number: ").strip()
+    if recipient_acct not in accounts:
+        raise InvalidAccountError("Account does NOT exist❌")
+    if sender_acct == recipient_acct:
+        print("You canNOT transfer to same account❌")
+        return
+    
+    while True:
+        amount = input("Enter transfer amount: ").strip()
+        try:
+            send_amount = Decimal(amount)
+        except InvalidOperation:
+            print("Invalid input. Amount MUST be a valid number")
+            continue
+        if send_amount <= 0:
+            print("Transfer amount MUST be more than 0")
+            continue
+
+        transfer_amount = send_amount.quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
+        if transfer_amount <= 0:
+            print("Transfer rejected🚫 Amount MUST be more than 0")
+            continue
+
+        sender_bal = accounts[sender_acct]["balance"]   
+        if transfer_amount > sender_bal:
+            raise InsufficientFundsError("Insufficient funds!")
+
+        receiver_bal = accounts[recipient_acct]["balance"]
+        
+        accounts[sender_acct]["balance"] -= transfer_amount
+        accounts[recipient_acct]["balance"] += transfer_amount
+
 
 
 
