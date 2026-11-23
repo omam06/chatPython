@@ -137,6 +137,55 @@ def deposit():
             account["transactions"].pop()
             continue
 
+def withdrawal():
+    acct_num = input("Enter account number: ").strip()
+    if acct_num not in accounts:
+        raise InvalidAccountError("Account does NOT exist❌")
+
+    while True:
+        amount = input("Enter withdrawal amount: ").strip()
+        try:
+            withdraw_amount = Decimal(amount)
+        except InvalidOperation:
+            print("Invalid input. Amount MUST be a valid number")
+            continue
+        if withdraw_amount <= 0:
+            print("Withdrawal amount MUST be more than 0")
+            continue
+        
+        withdrawal_amount = withdraw_amount.quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
+        if withdrawal_amount <= 0:
+            print("Withdrawal rejected🚫 Amount MUST be more than 0")
+            continue
+
+        account = accounts[acct_num]
+        original_balance = account["balance"]
+        if withdrawal_amount > original_balance:
+            raise InsufficientFundsError("Insufficient Funds!")
+
+        account["balance"] = original_balance - withdrawal_amount
+
+        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        account["transactions"].append({
+            "type": "withdrawal", 
+            "amount": str(withdrawal_amount), 
+            "timestamp": timestamp
+        })
+
+        
+
+        save_success = save_accounts(accounts)
+        if save_success:
+            print(f"Withdrawal of ₦{withdrawal_amount} successful✅")
+            print(f"Balance: ₦{account['balance']}")
+            print()
+            break
+        else:
+            account["balance"] = original_balance
+            print(f"Withdrawal failed❌ Balance: {original_balance}")
+            account["transactions"].pop()
+            continue
+
 
 
 def transaction_history():
@@ -181,7 +230,10 @@ while True:
         except InvalidAccountError as e:
             print(e)
     elif operation == "4":
-        pass
+        try:
+            withdrawal()
+        except (InvalidAccountError, InsufficientFundsError)  as e:
+            print(e)
     elif operation == "5":
         pass
     elif operation == "6":
