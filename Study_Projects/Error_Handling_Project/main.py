@@ -1,3 +1,11 @@
+import os
+import json
+import random
+import copy
+from decimal import Decimal, InvalidOperation, ROUND_HALF_UP
+from datetime import datetime
+
+
 class BankingError(Exception):
     pass
 
@@ -8,11 +16,6 @@ class InsufficientFundsError(BankingError):
     pass
 
 
-import os
-import json
-import random
-import copy
-from decimal import Decimal, InvalidOperation, ROUND_HALF_UP
 
 filename = "accounts.json"
 def load_accounts():
@@ -108,7 +111,8 @@ def deposit():
             print("Deposit amount MUST be more than 0")
             continue
         deposit_amount = dep_amount.quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
-        
+        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
         if deposit_amount <= 0:
             print("Deposit amount rejected🚫 MUST be greater than zero")
             continue
@@ -116,7 +120,11 @@ def deposit():
         account = accounts[acct_num]
         initial_balance = account["balance"]
         account["balance"] += deposit_amount
-        account["transactions"].append({"type": "deposit", "amount": str(deposit_amount)})
+        account["transactions"].append({
+            "type": "deposit", 
+            "amount": str(deposit_amount), 
+            "timestamp": timestamp
+        })
 
         save_success = save_accounts(accounts)
         if save_success:
@@ -129,6 +137,23 @@ def deposit():
             account["transactions"].pop()
             continue
 
+
+
+def transaction_history():
+    acct_num = input("Enter account number: ").strip()
+    if acct_num not in accounts:
+        raise InvalidAccountError("Account does NOT exist❌")
+    
+    account = accounts[acct_num]
+    if not account["transactions"]:
+        print("Nothing to see here! No transaction history found.")
+        return
+
+    for each_transaction in account["transactions"]:
+        print(f"Transaction Type: {each_transaction['type'].title()}")
+        print(f"Amount: {each_transaction['amount']}")
+        print(f"Date & Time: {each_transaction['timestamp']}")
+        print("_______________________________________________________________")
 
 while True:
     print("\n========== PERSONAL BANKING SYSTEM ==========")
@@ -160,7 +185,7 @@ while True:
     elif operation == "5":
         pass
     elif operation == "6":
-        pass
+        transaction_history()
     elif operation == "7":
         print("Bye!👋 See you again")
         break
