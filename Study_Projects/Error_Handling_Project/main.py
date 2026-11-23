@@ -241,12 +241,16 @@ def transfer():
         
         save_success = save_accounts(accounts)
         if save_success:
-            print(f"Withdrawal of ₦{withdrawal_amount} successful✅")
-            print(f"Balance: ₦{account['balance']}")
-            print()
+            print(f"Transfer of ₦{transfer_amount} successful✅")
+            print(f"Balance: ₦{accounts[sender_acct]['balance']}")
             break
         else:
-            account["balance"] = original_balance
+            accounts[sender_acct]["balance"] = sender_bal
+            accounts[recipient_acct]["balance"] = receiver_bal
+            print(f"Transfer failed❌ Balance: {sender_bal}")
+            accounts[sender_acct]["transactions"].pop()
+            accounts[recipient_acct]["transactions"].pop()
+            continue
 
 
 def transaction_history():
@@ -296,7 +300,10 @@ while True:
         except (InvalidAccountError, InsufficientFundsError)  as e:
             print(e)
     elif operation == "5":
-        pass
+        try:
+            transfer()
+        except (InvalidAccountError, InsufficientFundsError) as e:
+            print(e)
     elif operation == "6":
         transaction_history()
     elif operation == "7":
