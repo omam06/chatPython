@@ -222,8 +222,31 @@ def transfer():
         
         accounts[sender_acct]["balance"] -= transfer_amount
         accounts[recipient_acct]["balance"] += transfer_amount
-
-
+        
+        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        
+        accounts[sender_acct]["transactions"].append({
+            "type": "transfer_out", 
+            "amount": str(transfer_amount),
+            "recipient": recipient_acct, 
+            "timestamp": timestamp
+        })
+        
+        accounts[recipient_acct]["transactions"].append({
+            "type": "transfer_in", 
+            "amount": str(transfer_amount),
+            "sender": sender_acct, 
+            "timestamp": timestamp
+        })
+        
+        save_success = save_accounts(accounts)
+        if save_success:
+            print(f"Withdrawal of ₦{withdrawal_amount} successful✅")
+            print(f"Balance: ₦{account['balance']}")
+            print()
+            break
+        else:
+            account["balance"] = original_balance
 
 
 def transaction_history():
