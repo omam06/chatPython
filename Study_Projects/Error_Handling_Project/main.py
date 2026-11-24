@@ -2,6 +2,7 @@ import os
 import json
 import random
 import copy
+import sys 
 from decimal import Decimal, InvalidOperation, ROUND_HALF_UP
 from datetime import datetime
 
@@ -19,22 +20,34 @@ class InsufficientFundsError(BankingError):
 
 filename = "accounts.json"
 def load_accounts():
-    if os.path.exists(filename):
-        try:
-            with open(filename, "r") as file:
-                json_data = json.load(file)
-                if isinstance(json_data, dict):
-                    for each_acct in json_data:
+    try:
+        with open(filename, "r") as file:
+            json_data = json.load(file)
+            if isinstance(json_data, dict):
+                required_fields = {"name", "balance", "transactions"}
+
+                for each_acct in json_data:
+                    if not isinstance(json_data[each_acct], dict):
+                        raise ValueError("Invalid account record")
+
+                    if not required_fields.issubset(json_data[each_acct].keys()):
+                        raise ValueError("Account record is missing required fields")
+                    
+                    if not isinstance(json_data[each_acct]["transactions"], list):
+                        raise ValueError("Invalid transaction history format")
+                    
+                    try:    
                         json_data[each_acct]["balance"] = Decimal(json_data[each_acct]["balance"]) 
-                    return json_data
-                else:
-                    print("❌Error: Invalid file found")
-                    return {}
-        except json.JSONDecodeError as e:
-            print("❌Failed to load file:", e)
-            return {}
-    else:
+                    except (InvalidOperation, TypeError) as e:
+                        raise ValueError(f"Invalid balance in account {each_acct}") from e 
+                return json_data
+            else:
+                raise ValueError("Invalid account data format")
+    except FileNotFoundError:
         return {}
+    except json.JSONDecodeError as e:
+        raise RuntimeError("Unable to load account data") from e 
+    
 
 def save_accounts(accounts):
         try:
@@ -48,8 +61,12 @@ def save_accounts(accounts):
         except Exception as err:
             print("❌Failed to save account:", err)
             return False
-            
-accounts = load_accounts()
+
+try:            
+    accounts = load_accounts()
+except (RuntimeError, ValueError) as e:
+    print(f"Banking system cannot start: {e}")
+    sys.exit()
 
 def create_account():
     customer_name = input("Enter your name: ").strip().title()
