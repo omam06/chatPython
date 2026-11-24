@@ -263,8 +263,13 @@ def transaction_history():
         print("Nothing to see here! No transaction history found.")
         return
 
+    transaction_labels = {
+        "transfer_out": "Transfer Sent",
+        "transfer_in": "Transfer Received"
+    }
+
     for each_transaction in account["transactions"]:
-        print(f"Transaction Type: {each_transaction['type'].title()}")
+        print(f"Transaction Type: {transaction_labels.get(each_transaction['type'], each_transaction['type'].title())}")
         print(f"Amount: {each_transaction['amount']}")
         print(f"Date & Time: {each_transaction['timestamp']}")
         print("_______________________________________________________________")
